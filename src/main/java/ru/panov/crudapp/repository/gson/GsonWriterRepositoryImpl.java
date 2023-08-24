@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class GsonWriterRepositoryImpl extends AbstractGsonRepo<Writer> implements WriterRepository {
-    private static final String path = "src/main/resources/writers.json";
+    private final String pathWriter = "src/main/resources/writers.json";
 
     public GsonWriterRepositoryImpl(Gson gson) {
         super(gson);
@@ -23,14 +23,18 @@ public class GsonWriterRepositoryImpl extends AbstractGsonRepo<Writer> implement
     @Override
     public Writer getById(Integer id) {
         return getAll().stream().filter(x -> x.getId().equals(id)).findFirst()
-                .orElseThrow(() -> new NotFoundException("Writer not found get id: " + id));
+                .orElseThrow(() -> new NotFoundException("Writer not found get by id: " + id));
     }
 
     @Override
     public List<Writer> getAll() {
-        try (Reader reader = new FileReader(path)) {
-            return gson.fromJson(reader, new TypeToken<List<Writer>>() {
+        try (Reader reader = new FileReader(pathWriter)) {
+            List<Writer> writers = gson.fromJson(reader, new TypeToken<List<Writer>>() {
             }.getType());
+            if (writers == null) {
+                writers = new ArrayList<>();
+            }
+            return writers;
         } catch (Exception ex) {
             return Collections.emptyList();
         }
@@ -39,12 +43,9 @@ public class GsonWriterRepositoryImpl extends AbstractGsonRepo<Writer> implement
     @Override
     public Writer save(Writer writer) {
         List<Writer> getAll = getAll();
-        if (getAll == null) {
-            getAll = new ArrayList<>();
-        }
         writer.setId(nextId(getAll));
         getAll.add(writer);
-        saveList(getAll, path);
+        saveList(getAll, pathWriter);
         return writer;
     }
 
@@ -58,7 +59,7 @@ public class GsonWriterRepositoryImpl extends AbstractGsonRepo<Writer> implement
                     }
                     return w;
                 }).toList();
-        saveList(updated, path);
+        saveList(updated, pathWriter);
         return writer;
     }
 

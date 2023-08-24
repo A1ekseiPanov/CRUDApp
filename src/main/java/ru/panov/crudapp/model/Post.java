@@ -1,6 +1,7 @@
 package ru.panov.crudapp.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Post extends AbstractBaseEntity {
@@ -8,12 +9,14 @@ public class Post extends AbstractBaseEntity {
     private final LocalDateTime created;
     private LocalDateTime updated;
     private List<Label> labels;
+    private PostStatus postStatus;
 
     public Post(String content, List<Label> labels) {
         this.content = content;
         this.created = LocalDateTime.now();
         this.updated = LocalDateTime.now();
         this.labels = labels;
+        this.postStatus = PostStatus.ACTIVE;
     }
 
     public String getContent() {
@@ -22,6 +25,10 @@ public class Post extends AbstractBaseEntity {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
     }
 
     public LocalDateTime getUpdated() {
@@ -40,15 +47,30 @@ public class Post extends AbstractBaseEntity {
         this.labels = labels;
     }
 
+    public PostStatus getPostStatus() {
+        return postStatus;
+    }
+
+    public void setPostStatus(PostStatus postStatus) {
+        this.postStatus = postStatus;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
                 "id=" + id +
-                ", status=" + status +
+                ", postStatus=" + postStatus +
                 ", content='" + content + '\'' +
                 ", created=" + created +
                 ", updated=" + updated +
                 ", labels=" + labels +
                 '}';
+    }
+
+    public void addLabel(Label label) {
+        if (labels == null) {
+            labels = new ArrayList<>();
+        }
+        labels.add(label);
     }
 }

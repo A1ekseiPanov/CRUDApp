@@ -1,17 +1,19 @@
 package ru.panov.crudapp.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Writer extends AbstractBaseEntity {
     private String firstName;
     private String lastName;
     private List<Post> posts;
-
+    private Status status;
 
     public Writer(String firstName, String lastName, List<Post> posts) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.posts = posts;
+        this.status = Status.ACTIVE;
     }
 
     public String getFirstName() {
@@ -38,6 +40,14 @@ public class Writer extends AbstractBaseEntity {
         this.posts = posts;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Writer{" +
@@ -47,5 +57,12 @@ public class Writer extends AbstractBaseEntity {
                 ", lastName='" + lastName + '\'' +
                 ", posts=" + posts +
                 '}';
+    }
+
+    public void addPost(Post post) {
+        if (posts == null) {
+            posts = new ArrayList<>();
+        }
+        posts.add(post);
     }
 }
