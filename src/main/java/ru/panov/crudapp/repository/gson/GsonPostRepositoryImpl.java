@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import ru.panov.crudapp.model.Post;
 import ru.panov.crudapp.model.PostStatus;
+import ru.panov.crudapp.model.Writer;
 import ru.panov.crudapp.repository.PostRepository;
+import ru.panov.crudapp.repository.WriterRepository;
 import ru.panov.crudapp.util.exception.NotFoundException;
 
 import java.io.FileReader;
@@ -16,9 +18,11 @@ import java.util.List;
 
 public class GsonPostRepositoryImpl extends AbstractGsonRepo<Post> implements PostRepository {
     private final String postPath = "src/main/resources/posts.json";
+    private final WriterRepository writerRepository;
 
-    public GsonPostRepositoryImpl(Gson gson) {
+    public GsonPostRepositoryImpl(Gson gson, WriterRepository writerRepository) {
         super(gson);
+        this.writerRepository = writerRepository;
     }
 
     @Override
@@ -56,12 +60,19 @@ public class GsonPostRepositoryImpl extends AbstractGsonRepo<Post> implements Po
         List<Post> updated = getAll.stream()
                 .map(p -> {
                     if (p.getId().equals(post.getId())) {
+                        post.setCreated(p.getCreated());
                         post.setUpdated(LocalDateTime.now());
                         return post;
                     }
                     return p;
                 }).toList();
         saveList(updated, postPath);
+        for (Writer w : writerRepository.getAll()) {
+            if (w.getPosts().equals(getAll)) {
+                w.setPosts(updated);
+                writerRepository.update(w);
+            }
+        }
         return post;
     }
 

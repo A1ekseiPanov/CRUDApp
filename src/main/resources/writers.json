@@ -1,0 +1,32 @@
+[
+  {
+    "firstName": "w",
+    "lastName": "w",
+    "posts": [
+      {
+        "content": "p2",
+        "created": "29:08:2023 22:17:13",
+        "updated": "29:08:2023 22:18:51",
+        "labels": [
+          {
+            "name": "l",
+            "status": "ACTIVE",
+            "id": 1
+          }
+        ],
+        "postStatus": "DELETED",
+        "id": 1
+      },
+      {
+        "content": "p3",
+        "created": "29:08:2023 22:20:55",
+        "updated": "29:08:2023 22:20:55",
+        "labels": [],
+        "postStatus": "ACTIVE",
+        "id": 2
+      }
+    ],
+    "status": "ACTIVE",
+    "id": 1
+  }
+]

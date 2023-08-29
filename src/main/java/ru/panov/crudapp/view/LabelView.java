@@ -19,35 +19,24 @@ public class LabelView {
         boolean running = true;
 
         while (running) {
-            System.out.println("1. Create Label");
-            System.out.println("2. Get Label by ID");
-            System.out.println("3. Get All Labels");
-            System.out.println("4. Update Label");
-            System.out.println("5. Delete Label");
+            System.out.println("1. Get Label by ID");
+            System.out.println("2. Get All Labels");
+            System.out.println("3. Update Label");
+            System.out.println("4. Delete Label");
             System.out.println("0. Exit");
             System.out.print("Select an option: ");
 
             String option = scanner.nextLine();
 
             switch (option) {
-                case "1" -> create();
-                case "2" -> get();
-                case "3" -> getAll();
-                case "4" -> update();
-                case "5" -> delete();
+                case "1" -> get();
+                case "2" -> getAll();
+                case "3" -> update();
+                case "4" -> delete();
                 case "0" -> running = false;
                 default -> System.out.println("Invalid option. Please try again.");
             }
         }
-    }
-
-    public void create() {
-        System.out.println("Enter name: ");
-        String name = scanner.nextLine();
-        Label newLabel = labelController.create(name);
-        System.out.println();
-        System.out.println(newLabel);
-        System.out.println();
     }
 
     public void get() {

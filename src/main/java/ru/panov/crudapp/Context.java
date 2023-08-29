@@ -27,13 +27,13 @@ public class Context {
     private final PostRepository postRepository = new GsonPostRepositoryImpl(
             new GsonBuilder().setPrettyPrinting().serializeNulls()
                     .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
-                    .create());
+                    .create(), writerRepository);
 
     private final LabelRepository labelRepository = new GsonLabelRepositoryImpl(new GsonBuilder().setPrettyPrinting().serializeNulls()
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
-            .create());
-    Scanner scanner = new Scanner(System.in);
+            .create(), postRepository);
 
+    Scanner scanner = new Scanner(System.in);
 
     public void start() {
         boolean running = true;
@@ -43,7 +43,7 @@ public class Context {
             System.out.println("1. Writer");
             System.out.println("2. Post");
             System.out.println("3. Label");
-            System.out.println("4. Exit");
+            System.out.println("0. Exit");
 
             String choice = scanner.nextLine();
 
@@ -51,7 +51,7 @@ public class Context {
                 case "1" -> writerRun();
                 case "2" -> postRun();
                 case "3" -> labelRun();
-                case "4" -> running = false;
+                case "0" -> running = false;
                 default -> System.out.println("Invalid choice");
             }
         }

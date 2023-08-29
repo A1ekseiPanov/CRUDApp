@@ -6,10 +6,17 @@ import java.util.List;
 
 public class Post extends AbstractBaseEntity {
     private String content;
-    private final LocalDateTime created;
+    private LocalDateTime created;
     private LocalDateTime updated;
     private List<Label> labels;
     private PostStatus postStatus;
+
+    public Post(String content) {
+        this.content = content;
+        this.created = LocalDateTime.now();
+        this.updated = LocalDateTime.now();
+        this.postStatus = PostStatus.ACTIVE;
+    }
 
     public Post(String content, List<Label> labels) {
         this.content = content;
@@ -29,6 +36,10 @@ public class Post extends AbstractBaseEntity {
 
     public LocalDateTime getCreated() {
         return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 
     public LocalDateTime getUpdated() {

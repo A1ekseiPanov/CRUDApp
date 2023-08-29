@@ -18,10 +18,10 @@ public class WriterView {
         this.scanner = new Scanner(System.in);
     }
 
-    public void run(){
+    public void run() {
         boolean running = true;
 
-        while (running){
+        while (running) {
             System.out.println("1. Create Writer");
             System.out.println("2. Get Writer by ID");
             System.out.println("3. Get All Writers");
@@ -48,7 +48,7 @@ public class WriterView {
         }
     }
 
-    public void create(){
+    public void create() {
         System.out.print("Enter firstname: ");
         String firstname = scanner.nextLine();
         System.out.print("Enter lastname: ");
@@ -60,7 +60,7 @@ public class WriterView {
         System.out.println();
     }
 
-    public void get(){
+    public void get() {
         System.out.print("Enter Writer id: ");
         String id = scanner.nextLine();
         Writer writer = writerController.get(Integer.parseInt(id));
@@ -69,15 +69,15 @@ public class WriterView {
         System.out.println();
     }
 
-    public void getAll(){
+    public void getAll() {
         List<Writer> writers = writerController.getAll();
-        for(Writer writer : writers){
+        for (Writer writer : writers) {
             System.out.println(writer);
             System.out.println();
         }
     }
 
-    public void update(){
+    public void update() {
         System.out.print("Enter Writer id to update: ");
         String id = scanner.nextLine();
         System.out.println();
@@ -87,19 +87,18 @@ public class WriterView {
         System.out.print("Enter update lastname: ");
         String lastname = scanner.nextLine();
         System.out.println();
-        List<Post> posts = new ArrayList<>();
-        Writer updateWriter = writerController.update(Integer.parseInt(id), firstname, lastname, posts);
+        Writer updateWriter = writerController.update(Integer.parseInt(id), firstname, lastname);
         System.out.println();
         System.out.println(updateWriter);
         System.out.println();
     }
 
-    public void delete(){
+    public void delete() {
         System.out.print("Enter writer ID to delete: ");
         String id = scanner.nextLine();
         writerController.delete(Integer.parseInt(id));
         System.out.println();
-        System.out.println("Writer by id: "+ id +" deleted.");
+        System.out.println("Writer by id: " + id + " deleted.");
         System.out.println();
     }
 
@@ -110,7 +109,7 @@ public class WriterView {
         System.out.print("Enter post content: ");
         String content = scanner.nextLine();
         List<Label> labels = new ArrayList<>();
-        Post newPost = new Post(content,labels);
+        Post newPost = new Post(content, labels);
         Writer updatedWriter = writerController.addPost(Integer.parseInt(writerId), newPost);
         System.out.println();
         System.out.println("Post added to Writer with ID: " + updatedWriter);

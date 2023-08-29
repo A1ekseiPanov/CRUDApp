@@ -9,6 +9,12 @@ public class Writer extends AbstractBaseEntity {
     private List<Post> posts;
     private Status status;
 
+    public Writer(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.status = Status.ACTIVE;
+    }
+
     public Writer(String firstName, String lastName, List<Post> posts) {
         this.firstName = firstName;
         this.lastName = lastName;

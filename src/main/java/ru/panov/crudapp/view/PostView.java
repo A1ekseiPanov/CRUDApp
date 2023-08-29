@@ -4,7 +4,6 @@ import ru.panov.crudapp.controller.PostController;
 import ru.panov.crudapp.model.Label;
 import ru.panov.crudapp.model.Post;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,45 +20,33 @@ public class PostView {
         boolean running = true;
 
         while (running) {
-            System.out.println("1. Create Post");
-            System.out.println("2. Get Post by ID");
-            System.out.println("3. Get All Posts");
-            System.out.println("4. Update Post");
-            System.out.println("5. Delete Post");
-            System.out.println("6. Add label to Post");
+            System.out.println("1. Get Post by ID");
+            System.out.println("2. Get All Posts");
+            System.out.println("3. Update Post");
+            System.out.println("4. Delete Post");
+            System.out.println("5. Add label to Post");
             System.out.println("0. Exit");
             System.out.print("Select an option: ");
 
             String option = scanner.nextLine();
 
             switch (option) {
-                case "1" -> create();
-                case "2" -> get();
-                case "3" -> getAll();
-                case "4" -> update();
-                case "5" -> delete();
-                case "6" -> addLabel();
+                case "1" -> get();
+                case "2" -> getAll();
+                case "3" -> update();
+                case "4" -> delete();
+                case "5" -> addLabel();
                 case "0" -> running = false;
                 default -> System.out.println("Invalid option. Please try again.");
             }
         }
     }
 
-    private void create() {
-        System.out.println("Enter content: ");
-        String content = scanner.nextLine();
-        List<Label> labels = new ArrayList<>();
-        Post newPost = postController.create(content, labels);
-        System.out.println();
-        System.out.println(newPost);
-        System.out.println();
-    }
-
     private void get() {
         System.out.println("Enter Post id: ");
         Integer id = scanner.nextInt();
         Post post = postController.get(id);
-        System.out.println("Post found: " + post);
+        System.out.println(post);
     }
 
     public void getAll() {
@@ -76,8 +63,7 @@ public class PostView {
         scanner.nextLine();
         System.out.println("Enter update content: ");
         String content = scanner.nextLine();
-        List<Label> labels = new ArrayList<>();
-        Post updatePost = postController.update(id, content, labels);
+        Post updatePost = postController.update(id, content);
         System.out.println();
         System.out.println(updatePost);
         System.out.println();

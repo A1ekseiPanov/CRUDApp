@@ -3,8 +3,10 @@ package ru.panov.crudapp.repository.gson;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import ru.panov.crudapp.model.Label;
+import ru.panov.crudapp.model.Post;
 import ru.panov.crudapp.model.Status;
 import ru.panov.crudapp.repository.LabelRepository;
+import ru.panov.crudapp.repository.PostRepository;
 import ru.panov.crudapp.util.exception.NotFoundException;
 
 import java.io.FileReader;
@@ -15,9 +17,11 @@ import java.util.List;
 
 public class GsonLabelRepositoryImpl extends AbstractGsonRepo<Label> implements LabelRepository {
     private final String labelPath = "src/main/resources/labels.json";
+    private final PostRepository postRepository;
 
-    public GsonLabelRepositoryImpl(Gson gson) {
+    public GsonLabelRepositoryImpl(Gson gson, PostRepository postRepository) {
         super(gson);
+        this.postRepository = postRepository;
     }
 
     @Override
@@ -59,6 +63,12 @@ public class GsonLabelRepositoryImpl extends AbstractGsonRepo<Label> implements 
                     }
                     return l;
                 }).toList();
+        for (Post p : postRepository.getAll()) {
+            if (p.getLabels().equals(getAll)) {
+                p.setLabels(updated);
+                postRepository.update(p);
+            }
+        }
         saveList(updated, labelPath);
         return label;
     }

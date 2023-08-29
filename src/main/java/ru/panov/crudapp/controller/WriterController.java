@@ -33,16 +33,16 @@ public class WriterController {
         writerRepository.deleteById(id);
     }
 
-    public Writer update(Integer id, String firstName, String lastName, List<Post> posts) {
-        Writer newWriter = new Writer(firstName, lastName, posts);
+    public Writer update(Integer id, String firstName, String lastName) {
+        Writer newWriter = new Writer(firstName, lastName);
         newWriter.setId(id);
+        newWriter.setPosts(get(id).getPosts());
         return writerRepository.update(newWriter);
     }
 
     public Writer addPost(Integer writerId, Post post) {
         Writer writer = writerRepository.getById(writerId);
         writer.addPost(postRepository.save(post));
-
         return writerRepository.update(writer);
     }
 }

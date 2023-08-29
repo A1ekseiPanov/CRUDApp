@@ -24,18 +24,14 @@ public class PostController {
         return postRepository.getById(id);
     }
 
-    public Post create(String content, List<Label> labels) {
-        Post newPost = new Post(content, labels);
-        return postRepository.save(newPost);
-    }
-
     public void delete(Integer id) {
         postRepository.deleteById(id);
     }
 
-    public Post update(Integer id, String content, List<Label> labels) {
-        Post newPost = new Post(content, labels);
+    public Post update(Integer id, String content) {
+        Post newPost = new Post(content);
         newPost.setId(id);
+        newPost.setLabels(get(id).getLabels());
         return postRepository.update(newPost);
     }
 
